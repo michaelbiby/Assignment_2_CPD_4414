@@ -45,4 +45,11 @@ public class OrderQueue {
         return orderQueue.element();
     }
 
+    
+    public void process_order(Order ord) throws Exception {
+        if (ord.getTimeReceived() == null) {
+            throw new Exception();
+        }
+
+    }
 }

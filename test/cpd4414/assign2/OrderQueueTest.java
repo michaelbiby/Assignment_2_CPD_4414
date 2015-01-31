@@ -128,9 +128,17 @@ public class OrderQueueTest {
         assertEquals(expectedResult, result);
     }
     
-    
-    
-    
-    
-    
+    @Test
+    public void testWhenOrderTimeRecievedNotSetThrowException() throws Exception {
+        OrderQueue orderQueue = new OrderQueue();
+        Order order = new Order(null, null);
+        boolean check = false;
+        try {
+            orderQueue.process_order(order);
+        } catch (Exception ex) {
+            check = true;
+        }
+        assertTrue(check);
+    }
+
 }
