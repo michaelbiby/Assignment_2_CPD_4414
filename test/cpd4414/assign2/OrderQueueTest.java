@@ -145,8 +145,8 @@ public class OrderQueueTest {
     public void testWhenOrderTimeRecievedAndOrderQuantityInInventoryThenSetTimeToNow() throws Exception {
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00004", "JKL Construction");
-        order.addPurchase(new Purchase(6, 4));
-        order.addPurchase(new Purchase(8, 2));
+        order.addPurchase(new Purchase(9, 5));
+        order.addPurchase(new Purchase(11, 2));
         orderQueue.add(order);
         orderQueue.process_order(order);
         Date expectedResult = new Date();
@@ -154,4 +154,19 @@ public class OrderQueueTest {
         assertEquals(expectedResult, result);
     }
     
+    @Test
+    public void testWhenOrderDoesNotHaveQuantityInInventoryThenThrowException() throws Exception {
+        OrderQueue orderQueue = new OrderQueue();
+        Order order = new Order("CUST00005", "MNO Construction");
+        order.addPurchase(new Purchase(003, 5));
+        order.addPurchase(new Purchase(002, 2));
+        boolean check = false;
+        try {
+            orderQueue.process_order(order);
+        } catch (Exception ex) {
+            check = true;
+        }
+        assertTrue(check);
+    }
+
 }
