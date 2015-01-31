@@ -129,7 +129,7 @@ public class OrderQueueTest {
     }
     
     @Test
-    public void testWhenOrderTimeRecievedNotSetThrowException() throws Exception {
+    public void testWhenOrderTimeRecievedNotSetException() throws Exception {
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order(null, null);
         boolean check = false;
@@ -141,4 +141,17 @@ public class OrderQueueTest {
         assertTrue(check);
     }
 
+    @Test
+    public void testWhenOrderTimeRecievedAndOrderQuantityInInventoryThenSetTimeToNow() throws Exception {
+        OrderQueue orderQueue = new OrderQueue();
+        Order order = new Order("CUST00004", "JKL Construction");
+        order.addPurchase(new Purchase(6, 4));
+        order.addPurchase(new Purchase(8, 2));
+        orderQueue.add(order);
+        orderQueue.process_order(order);
+        Date expectedResult = new Date();
+        Date result = order.getTimeProcessed();
+        assertEquals(expectedResult, result);
+    }
+    
 }
